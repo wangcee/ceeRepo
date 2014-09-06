@@ -3,6 +3,6 @@ ceeRepo
 
 Cee Repository
 
-wiki log
+wiki log 2
 Home Page
 
