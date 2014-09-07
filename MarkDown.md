@@ -72,15 +72,4 @@ public static void main(String[] args){}
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-@wangcee
+@wangcee by [TextMate](http://macromates.com/) on Mac
