@@ -29,13 +29,15 @@ ____
 * option 2
 * option 3 
 
+1. step 1
+2. step 2
+3. step 3
+
 + point 1 
 + point 2
 + point 3
 
-1. step 1
-2. step 2
-3. step 3
+
 
 ###单行文本框
 		单行的文本框,只要两个Tab再输入文字即可
@@ -44,6 +46,27 @@ ____
 		多行的文本框
 		可以写入代码等,每行文字只要输入两个Tab再输入文字即可
 		可以输入一段代码
+
+普通文本，回车不能换行<br>
+需要使用\<br>
+
+![image](https://github.com/wangcee/ceeRepo/raw/master/images/shinetechlogo.png)
+<br>
+[公司网站www.shinetechchina.com](http://www.shinetechchina.com) 
+
+###文字树结构
+> abc
+> level1
+>> leve2
+>>> level3
+
+'''js
+function foo() {
+    alert('message');
+}
+
+
+
 
 
 
