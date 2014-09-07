@@ -20,18 +20,20 @@ __粗体字2__
 *斜体*
 _斜体_
 
-###分割线
-*****
-
 ____
 
 * option 1
 * option 2
 * option 3 
 
+###分割线
+*****
+
 1. step 1
 2. step 2
 3. step 3
+
+<br>
 
 + point 1 
 + point 2
