@@ -60,14 +60,14 @@ ____
 >> leve2
 >>> level3
 
-'''js
-function foo() {
-    alert('message');
-}
 
+```Bash
+echo "hello word"
+```
 
-
-
+```Java
+public static void main(String[] args){}
+```
 
 
 
