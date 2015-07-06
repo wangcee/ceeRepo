@@ -18,12 +18,12 @@ Spring 事件机制 - Synchronous
 ##### SRP原则 (Single Responsibility Principle)
 一个类或模块应该有一个且只有一个理由去改变。
 
+> Talk is cheap. Show me the code.  
+> 				 ——Linus Torvalds
+
 ##以前我们是这么做的
 
 **Case**：客户要unrank一个keyword
-
-> Talk is cheap. Show me the code.  
-> 				 ——Linus Torvalds
 
 ```Java
 //创建一个KeywordService类，处理unrank功能
@@ -42,7 +42,7 @@ public class KeywordService {
 }
 ```
 
-然后，客户说unrank keyword时要发邮件，要从tags里删除关系，那我们就再把GroupTagService和EmailService引入进KeywordService，并调用相关方法
+然后，客户说unrank keyword时要发邮件，并要从tags里删除关系，那我们就再把GroupTagService和EmailService引入进KeywordService，并调用相关方法
 
 ```Java
 @Service
@@ -70,4 +70,6 @@ public class KeywordService {
 ```
 
 如果客户再添加新的需求，我们还要回来修改这个类。 或者哪一天我们做什么功能的时候，会忘了修改这个类，而产生bug
+
+##Spring 同步事件机制
 
