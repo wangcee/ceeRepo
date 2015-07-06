@@ -20,5 +20,54 @@ Spring 事件机制 - Synchronous
 
 ##以前我们是这么做的
 
-Case：客户要unrank一个keyword
+**Case**：客户要unrank一个keyword
+
+> Talk is cheap. Show me the code.  
+> 				 ——Linus Torvalds
+
+```Java
+//创建一个KeywordService类，处理unrank功能
+@Service
+public class KeywordService {
+	
+	@Autowired
+	KeywordDAO keywordDAO;
+	
+	public void unrank(Long keywordId) {
+		
+		KeywordEntity keyword = keywordDAO.find(keywordId);
+		keyword.unrank();
+		keywordDAO.update(keyword);
+	}
+}
+```
+
+然后，客户说unrank keyword时要发邮件，要从tags里删除关系，那我们就再把GroupTagService和EmailService引入进KeywordService，并调用相关方法
+
+```Java
+@Service
+public class KeywordService {
+	
+	@Autowired
+	KeywordDAO keywordDAO;
+	
+	@Autowired
+	EmailService emailService;
+	
+	@Autowired
+	GroupTagService groupTagService;
+	
+	public void unrank(Long keywordId) {
+		
+		KeywordEntity keyword = keywordDAO.find(keywordId);
+		keyword.unrank();
+		keywordDAO.update(keyword);
+		
+		groupTagService.removeKeyword(keywordId);
+		emailService.sendUnrankAlert(keyword);
+	}
+}
+```
+
+如果客户再添加新的需求，我们还要回来修改这个类。 或者哪一天我们做什么功能的时候，会忘了修改这个类，而产生bug
 
