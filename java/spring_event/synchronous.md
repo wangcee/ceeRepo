@@ -73,3 +73,102 @@ public class KeywordService {
 
 ##Spring 同步事件机制
 
+####Create Event Class
+
+Event 必须继承 *org.springframework.context.ApplicationEvent*
+
+```Java
+public class KeywordUnrankEvent extends ApplicationEvent {
+
+	private static final long serialVersionUID = 6622777026840909769L;
+
+	private Long keywordId;
+	
+	public KeywordUnrankEvent(Object source) {
+		super(source);
+	}
+
+	public KeywordUnrankEvent(Object source, Long keywordId) {
+		super(source);
+		this.keywordId = keywordId;
+	}
+
+	public Long getKeywordId() {
+		return keywordId;
+	}
+	
+}
+```
+
+####Publish Event
+需要实现接口 *org.springframework.context.ApplicationEventPublisherAware*
+
+
+```Java
+@Service
+public class KeywordSyncService implements ApplicationEventPublisherAware {
+	
+	@Autowired
+	KeywordDAO keywordDAO;
+
+	//ApplicationEventPublisherAware interface required
+	private ApplicationEventPublisher applicationEventPublisher;
+	
+	public void unrank(Long keywordId) {
+		KeywordEntity keyword = keywordDAO.find(keywordId);
+		keyword.unrank();
+		keywordDAO.update(keyword);
+		
+		//Create Event
+		KeywordUnrankEvent event = new KeywordUnrankEvent(this, keywordId);
+		
+		//Publish Event
+		applicationEventPublisher.publishEvent(event);
+	}
+	
+	//ApplicationEventPublisherAware interface required
+	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+		this.applicationEventPublisher = applicationEventPublisher;
+	}
+}
+```
+
+####Listen Event
+
+Event Listener 需要实现 *org.springframework.context.ApplicationListener* 
+
+
+```Java
+//需要添加@Component注释
+@Component
+public class EmailEventListener implements ApplicationListener<ApplicationEvent> {
+	
+	static final Logger logger = LoggerFactory.getLogger(EmailEventListener.class);
+
+	public void onApplicationEvent(final ApplicationEvent event) {
+		if (event instanceof KeywordUnrankEvent) {
+			logger.info("Email Listener get Keyword Unrank Event : {}", event.getSource());
+		}
+	}
+
+}
+```
+
+```Java
+//ApplicationListener支持泛型
+@Component
+public class UnrankKeywordListener implements ApplicationListener<KeywordUnrankEvent> {
+
+	static final Logger logger = LoggerFactory.getLogger(UnrankKeywordListener.class);
+	
+	public void onApplicationEvent(KeywordUnrankEvent event) {
+		logger.info("Group Tag Unrank Listener : {}", event.getKeywordId());
+	}
+
+}
+```
+
+执行代码就可以看到结果了。以后如果客户希望在unrank keyword的时候再做什么，我们可以不用修改keywordService类，和其它Listener，只需要再写一个Listener就可以了，适应了OCP原则
+<br/>
+<br/>
+Spirng 同步事件机制，是通过反射找到所有监听事件的Listener并执行，后面再讲讲异步事件机制。
