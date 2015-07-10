@@ -30,4 +30,10 @@ public class KeywordDAO {
 		logger.info("update DB to unrank {}", keyword.getId());
 		return true;
 	}
+	
+	public boolean create(KeywordEntity keyword) {
+		keyword.setId(998877l);
+		logger.info("insert keyword " + keyword.getId());
+		return true;
+	}
 }
