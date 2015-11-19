@@ -3,6 +3,8 @@ Solr Query 语法
 
 Solr 查询无论是 Solrj 操作还是直接发送请求给 Solr 服务器，原理都是一样的，本质上都是发送 http 请求给 Solr 服务器，不过与 Solrj 操作 Solr 服务器不同，Solr 查询可以按照各种各样的形式返回结果，比如重要的 Json 格式，可以实现 Ajax 动态显示数据效果。
 
+> Solr Wiki : https://wiki.apache.org/solr/SolrResources
+
 > Solr 查询语法的特点(就是普通的 get 请求，key=value)
 
 ##### 常用的有
